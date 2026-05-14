@@ -1,0 +1,24 @@
+{
+  "history": [
+    {
+      "type": "battery",
+      "value": 180,
+      "timestamp": 1778668168.502363,
+      "datetime": "2026-05-13T13:29:28.502362"
+    },
+    {
+      "type": "battery",
+      "value": 180,
+      "timestamp": 1778668180.4636285,
+      "datetime": "2026-05-13T13:29:40.463628"
+    },
+    {
+      "type": "battery",
+      "value": 180,
+      "timestamp": 1778668278.734252,
+      "datetime": "2026-05-13T13:31:18.734252"
+    }
+  ],
+  "last_battery": 180,
+  "last_update": 1778668278.734252
+}

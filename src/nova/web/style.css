@@ -1,0 +1,240 @@
+/* ZZZ Original Aesthetic CSS */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&family=Inter:wght@400;600;800;900&display=swap');
+
+:root {
+    --bg-deep: #050505;
+    --bg-primary: #0a0a0a;
+    --neon-yellow: #ffea00;
+    --neon-green: #91bc00;
+    --ether: #fe427e;
+    --electric: #2eb6ff;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.6);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Cairo', 'Inter', sans-serif;
+    overflow: hidden;
+    direction: rtl; /* دعم اللغة العربية */
+    user-select: none;
+}
+
+/* CRT Scanline Effect */
+body::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        to bottom,
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+    );
+    background-size: 100% 4px;
+    z-index: 999;
+    pointer-events: none;
+}
+
+/* Chessboard/Grid Effect */
+.bg-grid {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: 
+        linear-gradient(65deg, rgba(255, 255, 255, 0.03) 12%, transparent 0 88%, rgba(255, 255, 255, 0.03) 0),
+        linear-gradient(65deg, rgba(255, 255, 255, 0.03) 12%, transparent 0 88%, rgba(255, 255, 255, 0.03) 0);
+    background-size: 8px 14px;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+/* Layout */
+.app-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: rgba(10, 10, 10, 0.95);
+    border-left: 2px solid var(--neon-yellow);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 0;
+}
+
+.logo-area {
+    padding: 0 20px 30px;
+    border-bottom: 1px solid rgba(255, 234, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.logo-area h1 {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--neon-yellow);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.nav-item {
+    padding: 15px 25px;
+    color: var(--text-secondary);
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(1, 0, 0.5, 1);
+    position: relative;
+    border-left: 0px solid transparent;
+}
+
+.nav-item:hover, .nav-item.active {
+    color: var(--bg-deep);
+    background: var(--neon-yellow);
+    padding-right: 35px;
+    box-shadow: 0 0 20px rgba(255, 234, 0, 0.4);
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+/* View Pages */
+.view-page {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    padding: 40px;
+    display: none;
+    flex-direction: column;
+    gap: 30px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(1, 0, 0.5, 1);
+    overflow-y: auto;
+}
+
+.view-page.active-view {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Geometric Logo Icon */
+.geometric-logo {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: var(--neon-yellow);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    margin-right: 10px;
+    vertical-align: middle;
+    animation: rotateLogo 10s linear infinite;
+}
+
+@keyframes rotateLogo {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+::-webkit-scrollbar-thumb { background: var(--neon-yellow); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--neon-green); }
+
+/* Glass Card with ZZZ Chamfered Edges */
+.glass-card {
+    background: rgba(20, 20, 20, 0.85);
+    padding: 25px;
+    position: relative;
+    overflow: hidden;
+    /* Slanted / Chamfered corners matching ZZZ */
+    clip-path: polygon(20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%, 0 20px);
+    /* Border simulation inside clip-path */
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+/* Slanted Button */
+.btn-slanted {
+    background: transparent;
+    color: var(--neon-yellow);
+    border: 2px solid var(--neon-yellow);
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: 900;
+    font-family: inherit;
+    cursor: pointer;
+    position: relative;
+    transform: skewX(-15deg); /* Slanted Effect */
+    transition: all 0.2s;
+    outline: none;
+    overflow: hidden;
+}
+
+.btn-slanted span {
+    display: inline-block;
+    transform: skewX(15deg); /* Unskew text */
+}
+
+.btn-slanted:hover {
+    background: var(--neon-yellow);
+    color: var(--bg-deep);
+    box-shadow: 0 0 15px rgba(255, 234, 0, 0.5);
+}
+
+.btn-slanted:active {
+    background: var(--neon-green);
+    border-color: var(--neon-green);
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.stat-box {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stat-value {
+    font-size: 38px;
+    font-weight: 900;
+    color: var(--neon-yellow);
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.log-box {
+    flex: 1;
+    font-family: monospace;
+    font-size: 13px;
+    color: var(--electric);
+    background: rgba(0,0,0,0.5);
+    padding: 15px;
+    border: 1px solid rgba(46, 182, 255, 0.3);
+    overflow-y: auto;
+}

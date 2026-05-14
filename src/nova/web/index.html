@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Dragon</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo-area">
+                <h1><span class="geometric-logo"></span> NOVA</h1>
+                <div style="font-size:12px; color:var(--text-secondary); margin-top:5px;">Zenless Zone Zero</div>
+            </div>
+            <div class="nav-item active" onclick="switchView('dashboard')">الرئيسية</div>
+            <div class="nav-item" onclick="switchView('combat')">القتال التلقائي</div>
+            <div class="nav-item" onclick="switchView('ai')">التنبؤ الذكي</div>
+            <div class="nav-item" onclick="switchView('settings')">الإعدادات</div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            
+            <!-- View 1: Dashboard -->
+            <div id="view-dashboard" class="view-page active-view">
+                <div style="display: flex; justify-content: space-between; align-items: flex-end;">
+                    <div>
+                        <h2 style="font-size: 28px; font-weight: 900;">لوحة المراقبة الحية</h2>
+                        <div style="color: var(--text-secondary); font-size: 14px;">أتمتة New Eridu - جاهز للعمل</div>
+                    </div>
+                    <button class="btn-slanted" id="btn-start" onclick="toggleAutomation()">
+                        <span id="btn-text">▶ تشغيل الأتمتة</span>
+                    </button>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="glass-card stat-box">
+                        <div class="stat-value" id="stat-battery">120</div>
+                        <div class="stat-label">الطاقة الحالية (Battery)</div>
+                    </div>
+                    <div class="glass-card stat-box">
+                        <div class="stat-value" id="stat-tasks">0</div>
+                        <div class="stat-label">المهام المكتملة</div>
+                    </div>
+                    <div class="glass-card stat-box">
+                        <div class="stat-value" id="stat-status" style="color: var(--neon-green)">متصل</div>
+                        <div class="stat-label">حالة النظام</div>
+                    </div>
+                </div>
+
+                <div class="glass-card" style="display:flex; flex-direction:column; flex:1;">
+                    <h3 style="margin-bottom: 15px; font-weight:800; color:var(--text-secondary);">سجل العمليات</h3>
+                    <div class="log-box" id="log-container">
+                        <div>[Nova] النظام جاهز. بانتظار تشغيل اللعبة...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View 2: Combat -->
+            <div id="view-combat" class="view-page">
+                <h2 style="font-size: 28px; font-weight: 900;">إعدادات القتال</h2>
+                <div class="glass-card">
+                    <p style="color: var(--text-secondary);">خيارات تخصيص القتال التلقائي ستكون هنا (اختيار الفرق، خطة المراوغة).</p>
+                </div>
+            </div>
+
+            <!-- View 3: AI -->
+            <div id="view-ai" class="view-page">
+                <h2 style="font-size: 28px; font-weight: 900;">التنبؤ الذكي للطاقة</h2>
+                <div class="glass-card">
+                    <p style="color: var(--text-secondary);">مراقبة استهلاك الطاقة وتوقع وقت الشحن الكامل.</p>
+                </div>
+            </div>
+
+            <!-- View 4: Settings -->
+            <div id="view-settings" class="view-page">
+                <h2 style="font-size: 28px; font-weight: 900;">إعدادات النظام</h2>
+                <div class="glass-card">
+                    <p style="color: var(--text-secondary);">ربط الـ Discord Webhook وتخصيص الواجهة.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        let backend = null;
+        let isRunning = false;
+
+        // مولّد الصوت (UI Synthesizer)
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+        
+        function playHoverSound() {
+            if (!audioCtx) audioCtx = new AudioContext();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime); 
+            osc.frequency.exponentialRampToValueAtTime(1500, audioCtx.currentTime + 0.05);
+            
+            gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+            
+            osc.connect(gainNode);
+            gainNode.connect(audioCtx.destination);
+            
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.05);
+        }
+
+        // ربط الصوت بالعناصر التفاعلية
+        document.querySelectorAll('.nav-item, .btn-slanted').forEach(el => {
+            el.addEventListener('mouseenter', playHoverSound);
+        });
+
+        // Router Logic (التوجيه بين الصفحات)
+        function switchView(viewId) {
+            // إخفاء كل الصفحات
+            document.querySelectorAll('.view-page').forEach(page => {
+                page.classList.remove('active-view');
+            });
+            // إزالة التأشير من كل الأزرار الجانبية
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // تفعيل الصفحة المطلوبة
+            document.getElementById('view-' + viewId).classList.add('active-view');
+            
+            // تفعيل الزر المناسب (البحث عنه عن طريق النص)
+            const btnMap = {
+                'dashboard': 'الرئيسية',
+                'combat': 'القتال التلقائي',
+                'ai': 'التنبؤ الذكي',
+                'settings': 'الإعدادات'
+            };
+            document.querySelectorAll('.nav-item').forEach(item => {
+                if(item.innerText.includes(btnMap[viewId])) {
+                    item.classList.add('active');
+                }
+            });
+
+            // تشغيل صوت النقر كتحسين إضافي
+            playHoverSound();
+        }
+
+        // إعداد الاتصال مع البايثون
+        new QWebChannel(qt.webChannelTransport, function(channel) {
+            backend = channel.objects.backend;
+            backend.logMsg.connect(addLog);
+            backend.statusUpdate.connect(updateStatus);
+        });
+
+        function toggleAutomation() {
+            if (!backend) return;
+            const btn = document.getElementById('btn-text');
+            const btnWrap = document.getElementById('btn-start');
+
+            if (!isRunning) {
+                backend.start_automation();
+                btn.innerText = "⏹ إيقاف الأتمتة";
+                btnWrap.style.borderColor = "var(--ether)";
+                btnWrap.style.color = "var(--ether)";
+            } else {
+                backend.stop_automation();
+                btn.innerText = "▶ تشغيل الأتمتة";
+                btnWrap.style.borderColor = "var(--neon-yellow)";
+                btnWrap.style.color = "var(--neon-yellow)";
+            }
+            isRunning = !isRunning;
+        }
+
+        function addLog(msg) {
+            const container = document.getElementById('log-container');
+            const div = document.createElement('div');
+            div.innerText = `[${new Date().toLocaleTimeString()}] ${msg}`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function updateStatus(battery, tasks, status) {
+            document.getElementById('stat-battery').innerText = battery;
+            document.getElementById('stat-tasks').innerText = tasks;
+            document.getElementById('stat-status').innerText = status;
+        }
+    </script>
+</body>
+</html>
