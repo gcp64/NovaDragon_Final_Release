@@ -1,45 +1,65 @@
-# Nova Dragon - Automation Framework
+<div align="center"><h1>NovaDragon_Final_Release</h1><p><strong>The Ultimate Automation and Intelligence Engine for Zenless Zone Zero</strong> | <strong>محرك الأتمتة والذكاء المطلق للعبة Zenless Zone Zero</strong></p><p><code>License: MIT Modified</code> <code>Platform: Cross-Platform</code> <code>Developed by: Bob</code></p></div>
 
-An advanced, fully-automated assistant and graphical user interface for Zenless Zone Zero (ZZZ), built upon the robust OneDragon core. Nova Dragon introduces a modern, high-performance WebEngine architecture featuring a Cyberpop Glassmorphism aesthetic that matches the game's original visual identity.
+* * *
 
-Developed and maintained by **bob**.
+NovaDragon\_Final\_Release is the ultimate automation and intelligence engine, providing a sophisticated graphical interface for enhancing gameplay in Zenless Zone Zero (ZZZ). It leverages advanced scripting and intelligent agents to streamline repetitive tasks and offer strategic advantages within the game.
 
-## Architecture & Features
-- **WebEngine Core:** Utilizing PySide6 `QWebEngineView` coupled with `QWebChannel` for high-performance frontend-backend communication.
-- **Cyberpop UI:** Authentic game aesthetics implemented in pure HTML/CSS, featuring geometric elements, CRT scanlines, and CSS `clip-path` chamfered edges.
-- **Live Bridge:** Real-time log interception and status monitoring from the underlying Python automation scripts injected directly into the Web DOM.
-- **Zero Local Footprint:** Designed dynamically using relative paths (`Path(__file__)`) to ensure the repository can be cloned and run on any machine without hardcoded local environment variables.
+NovaDragon\_Final\_Release هو محرك الأتمتة والذكاء المطلق، ويوفر واجهة رسومية متطورة لتعزيز تجربة اللعب في Zenless Zone Zero (ZZZ). يستفيد من البرمجة المتقدمة والوكلاء الأذكياء لتبسيط المهام المتكررة وتقديم مزايا استراتيجية داخل اللعبة.
 
-## Prerequisites
-- Python 3.11+
-- Windows OS (Required for direct memory/screen capturing protocols)
-- Game must run in Windowed or Borderless mode at 1920x1080 resolution.
+* * *
 
-## Installation
-1. Clone this repository to your local machine:
-   ```bash
-   git clone <your-github-repo-url>
-   cd NovaDragon
-   ```
-2. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-   *(Ensure PySide6 and standard OpenCV libraries are included as per the pyproject.toml specifications).*
+## Features | المميزات
 
-## Usage
-To launch the Nova Dragon dashboard, execute the main entry point:
+### 1\. Game Automation & Intelligence | أتمتة اللعبة والذكاء
+
+*   Automated task execution specific to Zenless Zone Zero gameplay. | تنفيذ المهام الآلية المخصصة لأسلوب لعب Zenless Zone Zero.
+*   Intelligent agents designed for strategic decision-making and optimal in-game actions. | وكلاء أذكياء مصممون لاتخاذ القرارات الاستراتيجية والإجراءات المثلى داخل اللعبة.
+
+### 2\. Intuitive Graphical Interface | واجهة رسومية بديهية
+
+*   User-friendly web-based interface for easy configuration and comprehensive control. | واجهة مستخدم سهلة الاستخدام تعتمد على الويب لسهولة التكوين والتحكم الشامل.
+*   Real-time status updates and detailed activity logging for effective monitoring. | تحديثات الحالة في الوقت الفعلي وتسجيل مفصل للنشاط من أجل مراقبة فعالة.
+
+* * *
+
+## Build from Source | البناء من المصدر
+
+### Requirements | المتطلبات
+
+*   Python 3.12+
+*   Modern Web Browser
+
+### Setup | الإعداد
+
 ```bash
-python src/nova/gui/app.py
+# Clone the repository
+git clone https://github.com/USERNAME/NovaDragon_Final_Release.git
+cd NovaDragon_Final_Release
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the application (assuming main.py or similar entry point)
+python main.py
 ```
-1. Open Zenless Zone Zero and ensure the game is focused.
-2. From the Nova Dragon dashboard, navigate to the Main View.
-3. Click "Start Automation" to initialize the hook.
-4. Monitor live execution logs and intelligent resource prediction metrics via the embedded terminal.
 
-## Legal & Disclaimer
-This software is provided "as-is" for educational and personal use. Automating game interactions may violate the Terms of Service of certain software. The developer (bob) assumes no liability for account suspensions or damages resulting from the use of this tool.
+* * *
 
----
-**Developer:** bob
-**License:** MIT License (See LICENSE file for details)
+## Tech Stack | التقنيات
+
+| Component | Technology |
+| :-- | :-- |
+| **Frontend/Platform** | HTML, CSS |
+| **Backend/Core** | Python |
+
+* * *
+
+## Terms of Use | شروط الاستخدام
+
+1.  **Personal Use:** Free for personal, non-commercial use. (الاستخدام الشخصي مجاني وغير تجاري).
+2.  **Modification:** You may modify this software for personal use. Public distribution requires written permission. (يمكنك تعديل البرنامج للاستخدام الشخصي. التوزيع العام للنسخ المعدلة يتطلب إذن كتابي).
+3.  **No Warranty:** This software is provided as-is. The developer is not responsible for any damage or data loss. (البرنامج مقدم كما هو. المطور غير مسؤول عن أي ضرر أو فقدان بيانات).
+
+* * *
+
+<div align="center"><strong>Developed with passion by Bob</strong><br>All rights reserved © 2026<br><br><em>This project is licensed under a Modified MIT License — see the LICENSE file for details.</em><br><em>هذا المشروع مرخص بموجب رخصة MIT معدّلة — راجع ملف LICENSE للتفاصيل.</em></div>
